@@ -1,0 +1,1 @@
+export const EXPERIMENT_OUTPUTS = ["Viscosity", "Cure Time", "Elongation", "Tensile Strength", "Compression Set"]
