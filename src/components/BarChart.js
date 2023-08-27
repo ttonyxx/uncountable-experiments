@@ -29,7 +29,7 @@ function BarChart({ id, label, inputs, color }) {
         },
       })
     );
-  }, [inputs]);
+  }, [inputs, bgColor, chart, chartId, color, label, resetCanvas]);
 
   /** Resets canvas to fix bug of rendering two graphs at once. */
   function resetCanvas() {

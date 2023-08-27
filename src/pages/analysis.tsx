@@ -62,7 +62,7 @@ export default function Analysis() {
       }
     }
     return res;
-  }, [rangesMap]);
+  }, [rangesMap, experiments]);
 
   return (
     <RootLayout>
@@ -129,6 +129,7 @@ export default function Analysis() {
             <div className="grid grid-cols-2 gap-10">
               {matchingExperiments.map((experiment) => (
                 <BarChart
+                  key={experiment.id}
                   id={`input-${experiment.id}`}
                   label="Input"
                   inputs={experiment.inputs}
