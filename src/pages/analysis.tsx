@@ -43,24 +43,24 @@ export default function Analysis() {
 
   const matchingExperiments = useMemo(() => {
     if (!experiments || rangesMap.size == 0) return [];
-    console.log(rangesMap)
-    const res = [];
+    const res = new Set();
 
     for (const experimentId in experiments) {
+      let match = true;
       for (const output of EXPERIMENT_OUTPUTS) {
         if (rangesMap.get(output).valid) {
           const val = experiments[experimentId].outputs[output];
           if (
-            val <= rangesMap.get(output).upper &&
-            val >= rangesMap.get(output).lower
+            val > rangesMap.get(output).upper ||
+            val < rangesMap.get(output).lower
           ) {
-            const exp = experiments![experimentId];
-            exp.id = experimentId;
-            res.push(exp);
+            match = false;
           }
         }
       }
+      if (match) res.add(experimentId)
     }
+    console.log(res)
     return res;
   }, [rangesMap, experiments]);
 
@@ -127,12 +127,12 @@ export default function Analysis() {
           </div>
           <div className="mt-10">
             <div className="grid grid-cols-2 gap-10">
-              {matchingExperiments.map((experiment) => (
+              {Array.from(matchingExperiments).map((id, i) => (
                 <BarChart
-                  key={experiment.id}
-                  id={`input-${experiment.id}`}
+                  key={i}
+                  id={`input-${id}`}
                   label="Input"
-                  inputs={experiment.inputs}
+                  inputs={experiments[id].inputs}
                   color="rgb(109, 253, 181)"
                 ></BarChart>
               ))}

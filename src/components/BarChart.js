@@ -33,7 +33,8 @@ function BarChart({ id, label, inputs, color }) {
 
   /** Resets canvas to fix bug of rendering two graphs at once. */
   function resetCanvas() {
-    document.getElementById(chartId).remove();
+    const el = document.getElementById(chartId)
+    if (el) el.remove();
     const canvas = document.createElement("canvas");
     canvas.setAttribute("id", chartId);
     document.getElementById(`${chartId}-container`).appendChild(canvas);
