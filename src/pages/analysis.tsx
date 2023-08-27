@@ -130,6 +130,7 @@ export default function Analysis() {
               {matchingExperiments.map((id, i) => (
                 <BarChart
                   key={i}
+                  reset={false}
                   id={`input-${id}`}
                   label="Input"
                   inputs={experiments[id].inputs}

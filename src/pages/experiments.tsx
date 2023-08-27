@@ -47,12 +47,14 @@ export default function Experiments() {
                     label="Input"
                     inputs={selectedExperiment.inputs}
                     color="rgb(109, 253, 181)"
+                    reset={true}
                   ></BarChart>
                   <BarChart
                     id={`output`}
                     label="Output"
                     inputs={selectedExperiment.outputs}
                     color="rgb(255, 99, 132)"
+                    reset={true}
                   ></BarChart>
                 </div>
                 <div className="flex flex-row justify-around">

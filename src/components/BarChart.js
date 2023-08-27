@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo } from "react";
 import { Chart } from "chart.js";
 
-function BarChart({ id, label, inputs, color }) {
+function BarChart({ id, label, inputs, color, reset }) {
   Chart.defaults.global.defaultFontColor = "#d3d3d3";
 
   const [chart, setChart] = useState();
@@ -9,7 +9,7 @@ function BarChart({ id, label, inputs, color }) {
   const bgColor = useMemo(() => color.substring(0, color.length - 1) + ", 0.5)", [color])
 
   useEffect(() => {
-    resetCanvas();
+    if (reset) resetCanvas();
     var ctx = document.getElementById(chartId).getContext("2d");
     if (chart) chart.destroy();
     setChart(
@@ -34,7 +34,7 @@ function BarChart({ id, label, inputs, color }) {
   /** Resets canvas to fix bug of rendering two graphs at once. */
   function resetCanvas() {
     const el = document.getElementById(chartId)
-    if (el) el.remove();
+    el.remove()
     const canvas = document.createElement("canvas");
     canvas.setAttribute("id", chartId);
     document.getElementById(`${chartId}-container`).appendChild(canvas);
@@ -44,7 +44,7 @@ function BarChart({ id, label, inputs, color }) {
     <div className="w-[600px] flex mx-auto my-auto">
       <div
         id={`${chartId}-container`}
-        className="border border-gray-400 pt-0 rounded-xl w-full h-fit my-auto shadow-xl"
+        className="border border-gray-400 pt-0 rounded-xl w-full my-auto shadow-xl"
       >
         <canvas id={chartId}></canvas>
       </div>
