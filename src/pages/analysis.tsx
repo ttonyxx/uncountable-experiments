@@ -43,7 +43,7 @@ export default function Analysis() {
 
   const matchingExperiments = useMemo(() => {
     if (!experiments || rangesMap.size == 0) return [];
-    const res = new Set();
+    const res = [];
 
     for (const experimentId in experiments) {
       let match = true;
@@ -58,7 +58,7 @@ export default function Analysis() {
           }
         }
       }
-      if (match) res.add(experimentId)
+      if (match) res.push(experimentId)
     }
     console.log(res)
     return res;
@@ -127,7 +127,7 @@ export default function Analysis() {
           </div>
           <div className="mt-10">
             <div className="grid grid-cols-2 gap-10">
-              {Array.from(matchingExperiments).map((id, i) => (
+              {matchingExperiments.map((id, i) => (
                 <BarChart
                   key={i}
                   id={`input-${id}`}
