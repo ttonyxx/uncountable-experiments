@@ -42,8 +42,8 @@ export default function Analysis() {
   );
 
   const matchingExperiments = useMemo(() => {
-    if (!experiments) return [];
-
+    if (!experiments || rangesMap.size == 0) return [];
+    console.log(rangesMap)
     const res = [];
 
     for (const experimentId in experiments) {
@@ -65,12 +65,12 @@ export default function Analysis() {
   }, [rangesMap, experiments]);
 
   return (
-    <RootLayout>
-      {!experiments ? (
+    <RootLayout home={false}>
+      {!experiments || rangesMap.size == 0 ? (
         <Spinner color="info" aria-label="info spinner example" />
       ) : (
         <div className="flex flex-col items-center">
-          <div className="mb-3">Enter some ranges</div>
+          <div className="mb-7 text-2xl font-bold">Enter some ranges</div>
           <div>
             <div className="relative rounded-lg overflow-hidden">
               <table className="w-full text-sm text-left text-white-500">
@@ -125,7 +125,7 @@ export default function Analysis() {
               </table>
             </div>
           </div>
-          <div className="mt-4">
+          <div className="mt-10">
             <div className="grid grid-cols-2 gap-10">
               {matchingExperiments.map((experiment) => (
                 <BarChart

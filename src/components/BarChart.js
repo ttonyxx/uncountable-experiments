@@ -29,7 +29,7 @@ function BarChart({ id, label, inputs, color }) {
         },
       })
     );
-  }, [inputs, bgColor, chart, chartId, color, label, resetCanvas]);
+  }, [inputs]);
 
   /** Resets canvas to fix bug of rendering two graphs at once. */
   function resetCanvas() {
@@ -40,7 +40,7 @@ function BarChart({ id, label, inputs, color }) {
   }
 
   return (
-    <div className="w-[700px] flex mx-auto my-auto">
+    <div className="w-[600px] flex mx-auto my-auto">
       <div
         id={`${chartId}-container`}
         className="border border-gray-400 pt-0 rounded-xl w-full h-fit my-auto shadow-xl"

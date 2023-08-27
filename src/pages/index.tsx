@@ -1,72 +1,26 @@
 import RootLayout from "@/components/Layout";
-import BarChart from "@/components/BarChart";
-import { Spinner } from "flowbite-react";
-import { useEffect, useMemo, useState } from "react";
-import useSWR from "swr";
-import { Experiment, Experiments } from "../../types";
-import Table from "@/components/Table";
-import { useDataContext } from "@/context/DataProvider";
+import Link from "next/link";
 
 export default function Home() {
-  const { experiments } = useDataContext()
-  const [selectedExperiment, setSelectedExperiment] = useState<Experiment>();
-
-  const experimentIds = useMemo(
-    () => (experiments ? Object.keys(experiments) : []),
-    [experiments]
-  );
-
-  const handleExperimentSelect = (event: any) => {
-    setSelectedExperiment(experiments![event.target.value]);
-  };
-
   return (
-    <RootLayout>
-      {!experiments ? (
-        <Spinner color="info" aria-label="info spinner example" />
-      ) : (
-        <div className="flex flex-col items-center">
-          <div className="w-64 mb-10">
-            <select
-              onChange={handleExperimentSelect}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            >
-              <option selected>Select an experiment</option>
-              {experimentIds.map((id) => (
-                <option key={id} value={id}>
-                  {id}
-                </option>
-              ))}
-            </select>
+    <RootLayout home={true}>
+      <div className="text-3xl font-bold mb-10">Uncountable Experiments</div>
+      <div className="flex flex-row gap-5">
+        <Link href="/experiments">
+          <div className="w-64 h-64 bg-slate-700 flex flex-col items-center justify-center gap-4 rounded-lg cursor-pointer hover:scale-105 transition-all">
+            <div>Data</div>
+            <div className="mx-3 rounded-lg overflow-hidden"> 
+            <img src="graph.png"/></div>
           </div>
-          <div>
-            {selectedExperiment ? (
-              <div className="flex flex-col gap-4">
-                <div className="flex flex-row w-full justify-between gap-4">
-                  <BarChart
-                    id={`input`}
-                    label="Input"
-                    inputs={selectedExperiment.inputs}
-                    color="rgb(109, 253, 181)"
-                  ></BarChart>
-                  <BarChart
-                    id={`output`}
-                    label="Output"
-                    inputs={selectedExperiment.outputs}
-                    color="rgb(255, 99, 132)"
-                  ></BarChart>
-                </div>
-                <div className="flex flex-row justify-around">
-                  <Table inputs={selectedExperiment.inputs}></Table>
-                  <Table inputs={selectedExperiment.outputs}></Table>
-                </div>
-              </div>
-            ) : (
-              <></>
-            )}
+        </Link>
+        <Link href="/analysis">
+          <div className="w-64 h-64 bg-slate-700 flex flex-col items-center justify-center gap-4 rounded-lg cursor-pointer hover:scale-105 transition-all">
+            <div>Analysis</div>
+            <div className="mx-3 rounded-lg overflow-hidden"> 
+            <img src="graph_v2.png"/></div>
           </div>
-        </div>
-      )}
+        </Link>
+      </div>
     </RootLayout>
   );
 }
